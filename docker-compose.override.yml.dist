@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    ann_miner:
+        networks:
+            - mining-network
+
+networks:
+    mining-network:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 192.168.208.0/28
+                  gateway: 192.168.208.1
