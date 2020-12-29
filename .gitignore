@@ -1,3 +1,5 @@
+.env.local
+docker-compose.override.yml
 target
 /packetcrypt-sys/target
 /pool.toml
