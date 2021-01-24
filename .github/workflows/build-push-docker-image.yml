@@ -3,7 +3,7 @@ name: Build-Push-Docker-Image
 on:
   push:
     branches:
-      - alpine-develop
+      - debian-buster-slim-develop
 
 jobs:
   build-push-docker-image:

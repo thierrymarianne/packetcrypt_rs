@@ -1,11 +1,9 @@
-FROM alpine:3.13.0 AS builder
+FROM debian:buster-slim AS builder
 
 COPY --chown=10000:10001 . /packetcrypt/
 
 # Update package source repositories
-RUN apk update && \
-# Install required packages
-    apt install -y tini curl gcc git file build-essential && \
+RUN apt update -y && \
 # Add packetcrypt group
     groupadd -g 10001 packetcrypt && \
 # Add packetcrypt_miner user
@@ -21,6 +19,8 @@ RUN apk update && \
         git \
         file \
         build-base && \
+# Install required packages
+    apt install -y tini curl gcc git file build-essential && \
 # Download rustup and install cargo
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile complete && \
 # Build release
