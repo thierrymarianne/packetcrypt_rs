@@ -1,9 +1,9 @@
-FROM debian:buster-slim AS builder
+FROM alpine:3.13.0 AS builder
 
 COPY --chown=10000:10001 . /packetcrypt/
 
 # Update package source repositories
-RUN apt update -y && \
+RUN apk update && \
 # Install required packages
     apt install -y tini curl gcc git file build-essential && \
 # Add packetcrypt group
@@ -14,6 +14,13 @@ RUN apt update -y && \
         -g packetcrypt \
         --home /packetcrypt \
     packetcrypt_miner && \
+    apk add --no-cache \
+        tini \
+        curl \
+        gcc \
+        git \
+        file \
+        build-base && \
 # Download rustup and install cargo
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile complete && \
 # Build release
@@ -38,4 +45,3 @@ COPY --from=builder /usr/bin .
 USER 10000:10001
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
-
