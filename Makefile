@@ -2,7 +2,7 @@ SHELL:=/bin/bash
 
 .PHONY: help restart-mining start-mining stop-mining tail-logs
 
-check_requirements=/bin/bash -c "source ./bin/console.sh && check_envvars"
+check_requirements=/bin/bash -c "source ./bin/console.sh && check_requirements"
 
 run_with_docker=docker-compose --project-name=packetcrypt_rs up --force-recreate --remove-orphans --detach
 ifeq ($(shell test -e docker-compose-test.override.yml; echo $$?), 0)
