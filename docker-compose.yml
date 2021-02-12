@@ -7,4 +7,3 @@ services:
         env_file:
           - .env.local
         command: ./packetcrypt ann --paymentaddr ${WALLET_ADDRESS} ${MINING_POOLS}
-
