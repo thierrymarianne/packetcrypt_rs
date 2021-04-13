@@ -12,13 +12,6 @@ RUN apt update -y && \
         -g packetcrypt \
         --home /packetcrypt \
     packetcrypt_miner && \
-    apk add --no-cache \
-        tini \
-        curl \
-        gcc \
-        git \
-        file \
-        build-base && \
 # Install required packages
     apt install -y tini curl gcc git file build-essential && \
 # Download rustup and install cargo
