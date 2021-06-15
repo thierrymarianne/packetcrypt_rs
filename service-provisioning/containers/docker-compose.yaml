@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  sonar-scanner:
+    image: sonarsource/sonar-scanner-cli
+    networks:
+      packetcrypt_rs: { aliases: [ sonar-scanner ] }
+    env_file:
+      - ../../.env.local
+    volumes:
+      - ../..:/usr/src
+    command: "tail -f /dev/null"
+
+  sonarqube-server:
+    image: sonarqube:lts-community
+    networks:
+      packetcrypt_rs: { aliases: [ sonarqube-server ] }
+    ports:
+      - "127.0.0.1:9000:9000"
+    env_file:
+      - ../../.env.local
+    # See this issue https://github.com/SonarSource/docker-sonarqube/issues/282
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+      - ../volumes/sonarqube-extensions:/opt/sonarqube/extensions
+      - ../volumes/sonarqube-logs:/opt/sonarqube/logs
+    depends_on:
+      - db
+      - sonar-scanner
+
+  db:
+    image: postgres
+    networks:
+      packetcrypt_rs: { aliases: [ db ] }
+    ports:
+      - "127.0.0.1:5432:5432"
+    env_file:
+      - ../../.env.local
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql-data:/var/lib/postgresql/data
+
+volumes:
+  sonarqube-data:
+  postgresql:
+  postgresql-data:

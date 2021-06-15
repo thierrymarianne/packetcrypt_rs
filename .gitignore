@@ -1,4 +1,7 @@
+.env.local
+.scannerwork/*
 target
 /packetcrypt-sys/target
 /pool.toml
 /datastore
+
