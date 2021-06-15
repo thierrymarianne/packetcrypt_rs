@@ -28,3 +28,9 @@ stop-mining: ## Stop existing mining container
 
 tail-logs: ## Tail running container logs
 	@$(list_running_packetcrypt_rs-containers) | xargs -I{} docker logs -f {}
+
+start-sonarqube: ## Start sonarqube server
+	/bin/bash -c 'source ./utils/utils.sh && start_sonarqube_server'
+
+start-sonar-scanner: ## Start sonar scanner
+	/bin/bash -c 'source ./utils/utils.sh && start_sonar_scanner'
