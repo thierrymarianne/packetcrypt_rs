@@ -1,0 +1,9 @@
+version: '3'
+services:
+
+networks:
+    packetcrypt_rs:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 192.170.195.0/30
