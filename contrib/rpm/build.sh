@@ -6,7 +6,7 @@
 #
 if which fpm; then
 	if which rpmbuild; then
-		fpm -n packetcrypt-linux -s dir -t rpm -v "$(./target/release/packetcrypt --version | sed 's/packetcrypt //' | tr -d '\n')" ./bin
+		fpm -n packetcrypt-linux -s dir -t rpm -v "$(./target/release/packetcrypt --version | sed -E 's/packetcrypt //' | tr -d '\n')" ./bin
 		echo "RPM file built."
 	else
 		echo "rpmbuild not installed or not reachable"
