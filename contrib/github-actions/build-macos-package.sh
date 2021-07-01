@@ -5,7 +5,7 @@ function build() {
   cargo build --release --features jemalloc
 
   mkdir "${GITHUB_WORKSPACE}/bin"
-  cp ".${GITHUB_WORKSPACE}/target/release/packetcrypt" "${GITHUB_WORKSPACE}/bin"
+  cp "${GITHUB_WORKSPACE}/target/release/packetcrypt" "${GITHUB_WORKSPACE}/bin"
 
   cd "${GITHUB_WORKSPACE}" || exit
   bash -x ./contrib/macos/build.sh
