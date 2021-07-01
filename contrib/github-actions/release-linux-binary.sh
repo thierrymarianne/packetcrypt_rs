@@ -4,9 +4,6 @@ function publish() {
   local binary
   binary="${1}"
 
-  local extension
-  extension="${2}"
-
   if [ ! -e "${binary}" ];
   then
       echo 'Invalid binary ('"${binary}"')'
@@ -42,15 +39,14 @@ function publish() {
     --data-binary @${binary} \
     -H 'Content-Type: application/octet-stream' \
     -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-    "${upload_url}?name=${release_name}-linux${extension}"
+    "${upload_url}?name=${release_name}-linux"
 
   curl \
     -X POST \
     --data "$checksum" \
     -H 'Content-Type: text/plain' \
     -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-    "${upload_url}?name=${release_name}-linux${extension}.sha256sum"
+    "${upload_url}?name=${release_name}-linux.sha256sum"
 }
 
-publish "${GITHUB_WORKSPACE}"'/'"${RELEASE_NAME}"'-linux-x86_64.rpm' '.rpm'
-publish "${GITHUB_WORKSPACE}"'/'"${RELEASE_NAME}"'-linux-amd64.deb' '.deb'
+publish "${GITHUB_WORKSPACE}"'/'"${RELEASE_NAME}"
