@@ -30,7 +30,7 @@ jobs:
         run: echo "RELEASE_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Install packages
-        run: sudo apt-get install bash build-essential curl jq gcc git
+        run: sudo apt-get install bash curl build-essential make jq gcc git
 
       - name: Set up Ruby 2.6
         uses: ruby/setup-ruby@v1
@@ -114,7 +114,7 @@ jobs:
         run: echo "RELEASE_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Install packages
-        run: sudo apt-get install bash build-essential curl jq gcc git mingw-w64-x86-64-dev zip
+        run: sudo apt-get install bash build-essential curl jq gcc git make mingw-w64-x86-64-dev zip
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
