@@ -54,7 +54,6 @@ jobs:
       - name: Build binaries
         run: /bin/bash -c "source $GITHUB_WORKSPACE/contrib/github-actions/build-linux-packages.sh"
         env:
-          PKT_FAIL_DIRTY: 1
           RELEASE_NAME: ${{ env.RELEASE_NAME }}
 
       - uses: actions/upload-artifact@main
@@ -104,7 +103,6 @@ jobs:
       - name: Build binaries
         run: /bin/bash -c "source $GITHUB_WORKSPACE/contrib/github-actions/build-macos-package.sh"
         env:
-          PKT_FAIL_DIRTY: 1
           RELEASE_NAME: ${{ env.RELEASE_NAME }}
 
       - uses: actions/upload-artifact@main
@@ -114,6 +112,47 @@ jobs:
 
       - name: Publish release
         run: /bin/bash -c "source $GITHUB_WORKSPACE/contrib/github-actions/release-macos-package.sh"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_NAME: ${{ env.RELEASE_NAME }}
+
+  windows:
+    needs: release
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Set env
+        run: echo "RELEASE_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Install packages
+        run: sudo apt-get install bash build-essential curl jq gcc git mingw-w64-x86-64-dev zip
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: complete
+          toolchain: stable
+          target: x86_64-pc-windows-gnu
+
+      - name: Set up rust cache
+        uses: Swatinem/rust-cache@v1
+
+      - uses: actions/checkout@v2
+
+      - name: Build binaries
+        run: /bin/bash -c "source $GITHUB_WORKSPACE/contrib/github-actions/build-windows-package.sh"
+        env:
+          RELEASE_NAME: ${{ env.RELEASE_NAME }}
+
+      - uses: actions/upload-artifact@main
+        with:
+          path: |
+            ${{ github.workspace }}/${{ env.RELEASE_NAME }}-win.zip
+
+      - name: Publish release
+        run: /bin/bash -c "source $GITHUB_WORKSPACE/contrib/github-actions/release-windows-package.sh"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_NAME: ${{ env.RELEASE_NAME }}
