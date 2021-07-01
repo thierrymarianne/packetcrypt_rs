@@ -49,6 +49,11 @@ jobs:
       - name: Set up rust cache
         uses: Swatinem/rust-cache@v1
 
+      - name: Build binaries
+        run: /bin/bash -c "source $GITHUB_WORKSPACE/contrib/github-actions/build-linux-binary.sh"
+        env:
+          RELEASE_NAME: ${{ env.RELEASE_NAME }}
+
       - uses: actions/upload-artifact@main
         with:
           path: |
@@ -119,7 +124,7 @@ jobs:
         run: echo "RELEASE_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Install packages
-        run: sudo apt-get install bash build-essential curl jq gcc git make mingw-w64-x86-64-dev zip
+        run: sudo apt-get install bash build-essential curl jq gcc gcc-mingw-w64-x86-64 git make zip
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
