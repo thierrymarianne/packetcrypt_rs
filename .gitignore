@@ -1,4 +1,8 @@
+*deb
 target
 /packetcrypt-sys/target
 /pool.toml
 /datastore
+*pkg
+*rpm
+
