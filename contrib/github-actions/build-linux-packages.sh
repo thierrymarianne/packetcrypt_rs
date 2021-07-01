@@ -5,7 +5,7 @@ function build() {
   cargo build --release --features jemalloc
 
   mkdir "${GITHUB_WORKSPACE}/bin"
-  cp ".${GITHUB_WORKSPACE}/target/release/packetcrypt" "${GITHUB_WORKSPACE}/bin"
+  cp "${GITHUB_WORKSPACE}/target/release/packetcrypt" "${GITHUB_WORKSPACE}/bin"
 
   local VERSION
   VERSION=$(echo "${RELEASE_NAME}" | sed -E 's/.+v//')
