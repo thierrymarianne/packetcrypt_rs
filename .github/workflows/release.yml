@@ -49,6 +49,11 @@ jobs:
       - name: Set up rust cache
         uses: Swatinem/rust-cache@v1
 
+      - name: Build binaries
+        run: /bin/bash -c "source $GITHUB_WORKSPACE/contrib/github-actions/build-linux-binary.sh"
+        env:
+          RELEASE_NAME: ${{ env.RELEASE_NAME }}
+
       - uses: actions/upload-artifact@main
         with:
           path: |
