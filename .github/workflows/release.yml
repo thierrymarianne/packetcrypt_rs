@@ -124,7 +124,7 @@ jobs:
         run: echo "RELEASE_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Install packages
-        run: sudo apt-get install bash build-essential curl jq gcc git make mingw-w64-x86-64-dev zip
+        run: sudo apt-get install bash build-essential curl jq gcc gcc-mingw-w64-x86-64 git make zip
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
