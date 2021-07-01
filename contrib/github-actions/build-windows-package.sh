@@ -2,7 +2,7 @@
 
 function build() {
   cd "${GITHUB_WORKSPACE}" || exit
-  cargo build --release --features jemalloc --target x86_64-pc-windows-gnu
+  cargo build --release --target x86_64-pc-windows-gnu
 
   mkdir ./bin
 
